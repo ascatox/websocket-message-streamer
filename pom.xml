@@ -100,7 +100,7 @@
                         <configuration>
                             <artifactSet>
                                 <excludes>
-                                    <!--<exclude>log4j:log4j:jar:</exclude>-->
+                                    <exclude>log4j:log4j:jar:</exclude>
                                 </excludes>
                             </artifactSet>
                         </configuration>

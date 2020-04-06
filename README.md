@@ -5,11 +5,11 @@ Clone the repo and launch `mvn install`
 
 In a maven project include this dependency: 
 ```
-        <dependency>
-			<groupId>it.eng.idsa</groupId>
-			<artifactId>websocket-message-streamer</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
+<dependency>
+    <groupId>it.eng.idsa</groupId>
+    <artifactId>websocket-message-streamer</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
 ```
 
 

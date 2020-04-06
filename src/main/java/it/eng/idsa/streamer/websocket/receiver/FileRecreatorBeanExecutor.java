@@ -46,7 +46,7 @@ public class FileRecreatorBeanExecutor {
                     .newTrigger()
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInMilliseconds(Integer.parseInt(configuration.getString("application.recreator.frequency")))
+                                    .withIntervalInMilliseconds(Integer.parseInt(configuration.getString("application.recreation.frequency")))
                                     .repeatForever()).build();
 
             // schedule it
