@@ -15,7 +15,7 @@ In a maven project include this dependency:
 
 ## Usage
 
-In the Bootstrap of your application `init the library in this way (**Spring Boot** not required):
+In the Bootstrap of your application `init` the library in this way (**Spring Boot** not required):
 ```
 @Configuration
 public class WebSockeMessageStreamerConfig {
@@ -24,7 +24,7 @@ public class WebSockeMessageStreamerConfig {
     public FileRecreatorBeanExecutor fileRecreatorBeanTimer() throws SchedulerException {
        FileRecreatorBeanExecutor fileRecreatorBeanExecutor = WebSocketServerManager.fileRecreatorBeanExecutor();
               fileRecreatorBeanExecutor.setPort(9060); //optional default 9000
-              fileRecreatorBeanExecutor.setKeystorePassword("ssl-server.jks"); //optional default classpath: ssl-server.jks
+              fileRecreatorBeanExecutor.setKeystorePassword("server.jks"); //optional default classpath: ssl-server.jks
               fileRecreatorBeanExecutor.setKeystorePassword("password");
         return fileRecreatorBeanExecutor;
     }
