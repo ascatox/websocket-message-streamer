@@ -28,6 +28,13 @@ public class WebSockeMessageStreamerConfig {
               fileRecreatorBeanExecutor.setKeystorePassword("password");
         return fileRecreatorBeanExecutor;
     }
+
+      @Bean
+        public IncomingDataAppResourceOverWs incomingDataAppResourceOverWs(){
+            IncomingDataAppResourceOverWs incomingDataAppResourceOverWs = new IncomingDataAppResourceOverWs();
+            WebSocketServerManager.messageWebSocketResponse().addPropertyChangeListener(incomingDataAppResourceOverWs);
+            return incomingDataAppResourceOverWs;
+        }
 }
 
 ```
