@@ -76,7 +76,7 @@ public class IncomingDataAppResourceOverWs implements PropertyChangeListener {
     }
 }
 
-``
+```
 
 
 In A Rest Api or wherever you need, use the WS Client in this way:
