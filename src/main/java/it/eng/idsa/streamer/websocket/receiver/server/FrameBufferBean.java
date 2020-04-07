@@ -1,18 +1,21 @@
 package it.eng.idsa.streamer.websocket.receiver.server;
 
+import java.util.concurrent.*;
+
 /**
- * 
+ *
  * @author Milan Karajovic and Gabriele De Luca
  *
  */
 
 public class FrameBufferBean {
-	private byte[] frame = null;
-	private boolean frameIsReceived = false;
+	// Pattern Producer Consumer implemented using BlockinqQueue is a newer and simpler implementation!
+	private BlockingQueue<byte[]> frameQueue;
 
 	private static FrameBufferBean instance;
 
 	private FrameBufferBean() {
+		this.frameQueue  = new ArrayBlockingQueue<>(1);
 	}
 
 	public static FrameBufferBean getInstance() {
@@ -26,35 +29,22 @@ public class FrameBufferBean {
 		return instance;
 	}
 
-	public synchronized void add(byte[] msg) {
-		if(frameIsReceived) {
-			try {
-				wait();
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		this.frame = msg;
-		frameIsReceived = true;
-		notify();
-	}
-	
-	public synchronized byte[] remove() {
-		if(!frameIsReceived) {
-			try {
-				wait();
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		frameIsReceived = false;
+	public void add(byte[] msg) {
 		try {
-			return frame;
-		}finally{
-			notify();
-			frame = null;
+			frameQueue.put(msg);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+	}
+
+	public  byte[] remove() {
+		try {
+			return frameQueue.take();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally{
+			frameQueue.clear();
+		}
+		return null;
 	}
 }

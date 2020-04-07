@@ -22,6 +22,7 @@ public class FileRecreatorJob implements Job {
             fileRecreatorBeanThread.start();
             String recreatedMultipartMessage = WebSocketServerManager.recreatedMultipartMessageBeanWebSocket().remove();
             // Extract header and payload from the multipart message
+            WebSocketServerManager.messageWebSocketResponse().setMultipartMessage(recreatedMultipartMessage);
             jobExecutionContext.setResult(recreatedMultipartMessage);
         } catch (Exception e) {
             logger.error("Error received during FileRecreatorJob execution with stack: " + e.getMessage());

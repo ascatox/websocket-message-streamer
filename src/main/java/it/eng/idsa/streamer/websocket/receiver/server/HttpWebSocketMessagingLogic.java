@@ -31,7 +31,6 @@ public class HttpWebSocketMessagingLogic {
         return instance;
     }
 
-    // TODO Duplicate code fragment @See InputStreamSocketListenerServer onMessage()
     public void onMessage(Session session, byte[] message) {
         String receivedMessage = new String(message, StandardCharsets.UTF_8);
        if (receivedMessage.equals(CLOSURE_FRAME)) {
@@ -43,10 +42,10 @@ public class HttpWebSocketMessagingLogic {
             if (receivedMessage.equals(END_BINARY_FRAME_SEPARATOR)) {
                 ResponseMessageSendPartialServer responseMessageSendPartialServer = WebSocketServerManager.responseMessageSendPartialWebSocket();
                 responseMessageSendPartialServer.setup(session);
-                Thread fileRecreatorBeanThread = new Thread(responseMessageSendPartialServer, "ResponseMessageSendPartialServer");
-                fileRecreatorBeanThread.start();
+                Thread responseMessageSendPartialServerThread = new Thread(responseMessageSendPartialServer, "ResponseMessageSendPartialServer");
+                responseMessageSendPartialServerThread.start();
             }
-           logger.debug(HttpWebSocketMessagingLogic.class.getSimpleName() +" DATA RECEIVED FROM SOCKET -> " + receivedMessage);
+           logger.info(HttpWebSocketMessagingLogic.class.getSimpleName() +" DATA RECEIVED FROM SOCKET -> " + receivedMessage);
 
        }
     }

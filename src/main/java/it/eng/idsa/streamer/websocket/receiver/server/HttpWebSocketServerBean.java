@@ -1,6 +1,5 @@
 package it.eng.idsa.streamer.websocket.receiver.server;
 
-import it.eng.idsa.streamer.websocket.receiver.FileRecreatorBeanExecutor;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.http.HttpVersion;
@@ -9,9 +8,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.BindException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;

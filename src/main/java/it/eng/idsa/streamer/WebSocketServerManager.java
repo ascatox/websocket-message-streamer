@@ -1,6 +1,7 @@
 package it.eng.idsa.streamer;
 
-import it.eng.idsa.streamer.websocket.receiver.FileRecreatorBeanExecutor;
+import it.eng.idsa.streamer.websocket.receiver.MessageWebSocketResponse;
+import it.eng.idsa.streamer.websocket.receiver.server.FileRecreatorBeanExecutor;
 import it.eng.idsa.streamer.websocket.receiver.server.*;
 import org.quartz.SchedulerException;
 
@@ -49,6 +50,10 @@ public class WebSocketServerManager {
 
     public static FileRecreatorBeanExecutor fileRecreatorBeanExecutor() throws SchedulerException {
         return FileRecreatorBeanExecutor.getInstance();
+    }
+
+    public static MessageWebSocketResponse messageWebSocketResponse() {
+        return MessageWebSocketResponse.getInstance();
     }
 
 }

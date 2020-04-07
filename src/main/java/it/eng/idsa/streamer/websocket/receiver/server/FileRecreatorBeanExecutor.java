@@ -1,7 +1,6 @@
-package it.eng.idsa.streamer.websocket.receiver;
+package it.eng.idsa.streamer.websocket.receiver.server;
 
 
-import it.eng.idsa.streamer.websocket.receiver.server.FileRecreatorJob;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.quartz.*;
@@ -48,7 +47,6 @@ public class FileRecreatorBeanExecutor {
                             SimpleScheduleBuilder.simpleSchedule()
                                     .withIntervalInMilliseconds(Integer.parseInt(configuration.getString("application.recreation.frequency")))
                                     .repeatForever()).build();
-
             // schedule it
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
             scheduler.start();
@@ -57,6 +55,7 @@ public class FileRecreatorBeanExecutor {
             logger.error("Error during Quartz Scheduling of FileRecreatorJob with stack: " + e.getMessage());
         }
     }
+
     public String getFileRecreatorResult() {
         try {
             for (JobExecutionContext jobContext : scheduler.getCurrentlyExecutingJobs()) {
