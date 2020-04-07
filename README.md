@@ -38,6 +38,45 @@ public class WebSockeMessageStreamerConfig {
 }
 
 ```
+Example of class to manage the `Response` arrived from Server: 
+
+```
+public class IncomingDataAppResourceOverWs implements PropertyChangeListener {
+
+    private String responseMessage;
+
+    public String getResponseMessage() {
+        return responseMessage;
+    }
+
+    public void setResponseMessage(String responseMessage) {
+        this.responseMessage = responseMessage;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        this.setResponseMessage((String) evt.getNewValue());
+        WebSocketServerManager.messageWebSocketResponse().sendResponse(dummyResponse(getResponseMessage()));
+    }
+
+
+    private String dummyResponse(String responseMessage) {
+        String responseString = null;
+        try {
+            String header = "A simple Header";
+            // Put check sum in the payload
+            String payload = "{\"checksum\":\"ABC123\"}";
+            // prepare multipart message.
+            HttpEntity entity = multiPartMessageService.createMultipartMessage(header, payload);
+            responseString = EntityUtils.toString(entity, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return responseString;
+    }
+}
+
+``
 
 
 In A Rest Api or wherever you need, use the WS Client in this way:
