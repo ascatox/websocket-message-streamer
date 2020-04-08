@@ -12,27 +12,19 @@ import org.quartz.SchedulerException;
 public class WebSocketServerManager {
 
 
-    public static FrameBufferBean frameBufferWebSocket() {
+    public static FrameBufferBean getFrameBufferWebSocket() {
         return FrameBufferBean.getInstance();
     }
 
-    /**
-     * @return
-     * @author Antonio Scatoloni
-     */
-    public static HttpWebSocketServerBean httpsServerWebSocket() {
+    public static HttpWebSocketServerBean getHttpsServerWebSocket() {
         return HttpWebSocketServerBean.getInstance();
     }
 
-    public static FileRecreatorBeanServer fileRecreatorBeanWebSocket() {
+    public static FileRecreatorBeanServer getFileRecreatorBeanWebSocket() {
         return FileRecreatorBeanServer.getInstance();
     }
 
-    /**
-     * @return
-     * @author Antonio Scatoloni
-     */
-    public static HttpWebSocketMessagingLogic messagingLogic() {
+    public static HttpWebSocketMessagingLogic getMessagingLogic() {
         return HttpWebSocketMessagingLogic.getInstance();
     }
 
@@ -52,7 +44,7 @@ public class WebSocketServerManager {
         return FileRecreatorBeanExecutor.getInstance();
     }
 
-    public static MessageWebSocketResponse messageWebSocketResponse() {
+    public static MessageWebSocketResponse getMessageWebSocketResponse() {
         return MessageWebSocketResponse.getInstance();
     }
 

@@ -29,7 +29,7 @@ public class ResponseMessageReceiverClient implements Runnable{
 	
 	@Override
 	public void run() {
-		byte[] responseMessage = WebSocketClientManager.responseMessageBufferWebSocketClient().remove();
+		byte[] responseMessage = WebSocketClientManager.getResponseMessageBufferWebSocketClient().remove();
 		
 		// Send the close frame 200 (OK), "Shutdown"; in this method we also close the wsClient.
 		try {

@@ -87,14 +87,14 @@ public class MessageWebSocketSender {
                 .setHeader(header)
                 .setPayload(payload)
                 .build();
-        FileStreamingBean fileStreamingBean = WebSocketClientManager.fileStreamingWebSocket();
+        FileStreamingBean fileStreamingBean = WebSocketClientManager.getFileStreamingWebSocket();
         WebSocket wsClient = createWebSocketClient(message, getWebSocketUrl(forwardTo));
         // Try to connect to the Server. Wait until you are not connected to the server.
         fileStreamingBean.setup(wsClient);
         fileStreamingBean.sendMultipartMessage(multipartMessage.toString());
         //fileStreamingBean.sendMultipartMessage(multipartMessage);
         // We don't have status of the response (is it 200 OK or not). We have only the content of the response.
-        String responseMessage = new String(WebSocketClientManager.responseMessageBufferWebSocketClient().remove());
+        String responseMessage = new String(WebSocketClientManager.getResponseMessageBufferWebSocketClient().remove());
         closeWSClient(wsClient, message);
         logger.info("received response: " + responseMessage);
         return responseMessage;
@@ -114,7 +114,7 @@ public class MessageWebSocketSender {
             WebSocketUpgradeHandler.Builder upgradeHandlerBuilder
                     = new WebSocketUpgradeHandler.Builder();
             WebSocketUpgradeHandler wsHandler = upgradeHandlerBuilder
-                    .addWebSocketListener(WebSocketClientManager.inputStreamSocketListenerWebSocketClient()).build();
+                    .addWebSocketListener(WebSocketClientManager.getInputStreamSocketListenerWebSocketClient()).build();
             wsClient = asyncHttpClient(clientConfig)
                     .prepareGet(url)
                     .execute(wsHandler)

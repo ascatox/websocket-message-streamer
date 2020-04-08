@@ -62,7 +62,7 @@ public class FileStreamingBean {
             }
         }
 
-        ResponseMessageReceiverClient responseMessageReceiverClient = WebSocketClientManager.responseMessageReceiverWebSocketClient();
+        ResponseMessageReceiverClient responseMessageReceiverClient = WebSocketClientManager.getResponseMessageReceiverWebSocketClient();
         //Thread responseMessageReceiverClientThread = new Thread(responseMessageReceiverClient, "ResponseMssageReceiverClientThread");
 
     }

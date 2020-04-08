@@ -56,11 +56,11 @@ public class IncomingDataAppResourceOverWs implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         this.setResponseMessage((String) evt.getNewValue());
-        WebSocketServerManager.messageWebSocketResponse().sendResponse(dummyResponse(getResponseMessage()));
+        WebSocketServerManager.messageWebSocketResponse().sendResponse(createDummyResponse(getResponseMessage()));
     }
 
 
-    private String dummyResponse(String responseMessage) {
+    private String createDummyResponse(String responseMessage) {
         String responseString = null;
         try {
             String header = "A simple Header";

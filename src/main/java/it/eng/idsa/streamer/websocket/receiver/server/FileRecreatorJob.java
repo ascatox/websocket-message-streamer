@@ -16,13 +16,13 @@ public class FileRecreatorJob implements Job {
     public void execute(JobExecutionContext jobExecutionContext) {
         try {
             logger.info("Recreation operation started at: " + LocalDateTime.now());
-            FileRecreatorBeanServer fileRecreatorBean = WebSocketServerManager.fileRecreatorBeanWebSocket();
+            FileRecreatorBeanServer fileRecreatorBean = WebSocketServerManager.getFileRecreatorBeanWebSocket();
             fileRecreatorBean.setup();
             Thread fileRecreatorBeanThread = new Thread(fileRecreatorBean, "FileRecreator");
             fileRecreatorBeanThread.start();
             String recreatedMultipartMessage = WebSocketServerManager.recreatedMultipartMessageBeanWebSocket().remove();
             // Extract header and payload from the multipart message
-            WebSocketServerManager.messageWebSocketResponse().setMultipartMessage(recreatedMultipartMessage);
+            WebSocketServerManager.getMessageWebSocketResponse().setMultipartMessage(recreatedMultipartMessage);
             jobExecutionContext.setResult(recreatedMultipartMessage);
         } catch (Exception e) {
             logger.error("Error received during FileRecreatorJob execution with stack: " + e.getMessage());

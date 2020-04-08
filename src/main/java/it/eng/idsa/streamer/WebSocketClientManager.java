@@ -12,23 +12,23 @@ import it.eng.idsa.streamer.websocket.sender.client.ResponseMessageReceiverClien
 
 public class WebSocketClientManager {
 
-    public static FileStreamingBean fileStreamingWebSocket() {
+    public static FileStreamingBean getFileStreamingWebSocket() {
         return FileStreamingBean.getInstance();
     }
 
-    public static InputStreamSocketListenerClient inputStreamSocketListenerWebSocketClient() {
+    public static InputStreamSocketListenerClient getInputStreamSocketListenerWebSocketClient() {
         return new InputStreamSocketListenerClient();
     }
 
-    public static ResponseMessageBufferClient responseMessageBufferWebSocketClient() {
+    public static ResponseMessageBufferClient getResponseMessageBufferWebSocketClient() {
         return ResponseMessageBufferClient.getInstance();
     }
 
-    public static ResponseMessageReceiverClient responseMessageReceiverWebSocketClient() {
+    public static ResponseMessageReceiverClient getResponseMessageReceiverWebSocketClient() {
         return ResponseMessageReceiverClient.getInstance();
     }
 
-    public static MessageWebSocketSender messageWebSocketSender() {
+    public static MessageWebSocketSender getMessageWebSocketSender() {
         return MessageWebSocketSender.getInstance();
     }
 

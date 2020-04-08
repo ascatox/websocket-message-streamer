@@ -45,9 +45,9 @@ public class FileRecreatorBeanServer implements Runnable {
     }
 
     public void setup() {
-        this.frameBuffer = WebSocketServerManager.frameBufferWebSocket();
+        this.frameBuffer = WebSocketServerManager.getFrameBufferWebSocket();
         this.recreatedmultipartMessage = WebSocketServerManager.recreatedMultipartMessageBeanWebSocket();
-        HttpWebSocketServerBean httpWebSocketServerBean = WebSocketServerManager.httpsServerWebSocket();
+        HttpWebSocketServerBean httpWebSocketServerBean = WebSocketServerManager.getHttpsServerWebSocket();
         httpWebSocketServerBean.createServer();
     }
 

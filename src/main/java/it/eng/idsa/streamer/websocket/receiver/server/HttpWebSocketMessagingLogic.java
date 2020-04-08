@@ -38,7 +38,7 @@ public class HttpWebSocketMessagingLogic {
             // This indicate that Client WebSocket now is closed
         } else {
             // Put the received frame in the frameBuffer
-           WebSocketServerManager.frameBufferWebSocket().add(message.clone());
+           WebSocketServerManager.getFrameBufferWebSocket().add(message.clone());
             if (receivedMessage.equals(END_BINARY_FRAME_SEPARATOR)) {
                 ResponseMessageSendPartialServer responseMessageSendPartialServer = WebSocketServerManager.responseMessageSendPartialWebSocket();
                 responseMessageSendPartialServer.setup(session);

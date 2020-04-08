@@ -33,6 +33,6 @@ public class InputStreamSocketListenerClient implements WebSocketListener {
 	
 	@Override
 	public void onBinaryFrame(byte[] payload, boolean finalFragment, int rsv) {
-		WebSocketClientManager.responseMessageBufferWebSocketClient().add(payload);
+		WebSocketClientManager.getResponseMessageBufferWebSocketClient().add(payload);
 	  }
 }
