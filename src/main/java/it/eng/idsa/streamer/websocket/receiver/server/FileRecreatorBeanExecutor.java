@@ -8,14 +8,20 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import java.util.ResourceBundle;
 
+/**
+ * @author Antonio Scatoloni
+ */
+
 public class FileRecreatorBeanExecutor {
     private static final Logger logger = LogManager.getLogger(FileRecreatorBeanExecutor.class);
     private static FileRecreatorBeanExecutor instance;
     private static ResourceBundle configuration = ResourceBundle.getBundle("config");
     private Scheduler scheduler = null;
+
     private Integer port;
     private String keystorePath;
     private String keystorePassword;
+    private Integer recreationFrequency;
 
     private FileRecreatorBeanExecutor() {
         trigger();
@@ -38,6 +44,8 @@ public class FileRecreatorBeanExecutor {
 
     private void trigger() {
         try {
+            Integer recreationFrequency = getRecreationFrequency() != null ? getRecreationFrequency() :
+                    Integer.parseInt(configuration.getString("application.recreation.frequency"));
             JobDetail job = JobBuilder.newJob(FileRecreatorJob.class).build();
 
             // Trigger the job to run on the next round minute
@@ -45,7 +53,7 @@ public class FileRecreatorBeanExecutor {
                     .newTrigger()
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInMilliseconds(Integer.parseInt(configuration.getString("application.recreation.frequency")))
+                                    .withIntervalInMilliseconds(recreationFrequency)
                                     .repeatForever()).build();
             // schedule it
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
@@ -90,5 +98,13 @@ public class FileRecreatorBeanExecutor {
 
     public void setKeystorePassword(String keystorePassword) {
         this.keystorePassword = keystorePassword;
+    }
+
+    public Integer getRecreationFrequency() {
+        return recreationFrequency;
+    }
+
+    public void setRecreationFrequency(Integer recreationFrequency) {
+        this.recreationFrequency = recreationFrequency;
     }
 }

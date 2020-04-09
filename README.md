@@ -82,9 +82,9 @@ public class IncomingDataAppResourceOverWs implements PropertyChangeListener {
 In A Rest Api or wherever you need, use the WS Client in this way:
 
 ```
- @PostMapping("/start")
+ @PostMapping("/executeFile")
     @ResponseBody
-    public String start(@RequestHeader("Forward-To") String forwardTo, @RequestBody String fileName) throws Exception {
+    public String executeFile(@RequestHeader("Forward-To") String forwardTo, @RequestBody String fileName) throws Exception {
         Resource resource = resourceLoader.getResource("classpath:examples-multipart-messages/" + fileName);
         return WebSocketClientManager.messageWebSocketSender().sendMultipartMessageWebSocketOverHttps(resource.getFile(), forwardTo);
     }
