@@ -66,6 +66,9 @@ public class HttpWebSocketServerBean {
         int port = Integer.parseInt(configuration.getString("server.ssl.port"));
         if (null != FileRecreatorBeanExecutor.getInstance().getPort())
             port = FileRecreatorBeanExecutor.getInstance().getPort();
+        String path = configuration.getString("server.path");
+        if (null != FileRecreatorBeanExecutor.getInstance().getPath())
+            path = FileRecreatorBeanExecutor.getInstance().getPath();
         HttpConfiguration http_config = getHttpConfiguration(port);
         SslContextFactory sslContextFactory = getSslContextFactory(keystorePath, password);
         HttpConfiguration https_config = new HttpConfiguration(http_config);
@@ -80,7 +83,7 @@ public class HttpWebSocketServerBean {
 
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         handler.setContextPath("/");
-        handler.addServlet(HttpWebSocketMessagingServlet.class, WS_URL);
+        handler.addServlet(HttpWebSocketMessagingServlet.class, path);
         server.setHandler(handler);
     }
 

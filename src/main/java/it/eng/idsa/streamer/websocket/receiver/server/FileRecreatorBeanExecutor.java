@@ -22,6 +22,7 @@ public class FileRecreatorBeanExecutor {
     private String keystorePath;
     private String keystorePassword;
     private Integer recreationFrequency;
+    private String path;
 
     private FileRecreatorBeanExecutor() {
         trigger();
@@ -106,5 +107,13 @@ public class FileRecreatorBeanExecutor {
 
     public void setRecreationFrequency(Integer recreationFrequency) {
         this.recreationFrequency = recreationFrequency;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }
