@@ -85,7 +85,7 @@ public class IncomingDataAppResourceOverWs implements PropertyChangeListener {
 In A Rest Api or wherever you need, use the WS Client in this way:
 
 ```
- @PostMapping("sendFile")
+ @PostMapping("/sendFile")
     @ResponseBody
     public String sendFile(@RequestHeader("Forward-To") String forwardTo, @RequestBody String fileName) throws Exception {
         Resource resource = resourceLoader.getResource("classpath:examples-multipart-messages/" + fileName);
