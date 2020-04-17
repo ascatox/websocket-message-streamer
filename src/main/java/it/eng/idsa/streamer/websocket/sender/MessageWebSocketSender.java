@@ -120,7 +120,7 @@ public class MessageWebSocketSender {
                     .execute(wsHandler)
                     .get();
         } catch (Exception e) {
-            logger.info("... can not create the WebSocket connection");
+            logger.info("... can not create the WebSocket connection with error: "+e.getMessage());
             if (null != message)
                 RejectionMessageService.sendRejectionMessage(
                         RejectionMessageType.REJECTION_COMMUNICATION_LOCAL_ISSUES,
@@ -170,7 +170,7 @@ public class MessageWebSocketSender {
 
     private String getWebSocketUrl(String forwardTo) {
         //Example of Forward-to : wss://localhost:8086
-        logger.info("Use IDSCP port for WS over https!");
+        logger.info("Use IDSCP port for WS over https! Forward to: "+forwardTo);
         Pattern pattern = Pattern.compile(REGEX_WSS);
         Matcher matcher = pattern.matcher(forwardTo);
         matcher.find();
