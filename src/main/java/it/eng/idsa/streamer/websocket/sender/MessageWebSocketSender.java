@@ -120,7 +120,7 @@ public class MessageWebSocketSender {
                     .execute(wsHandler)
                     .get();
         } catch (Exception e) {
-            logger.info("... can not create the WebSocket connection with error: "+e.getMessage());
+            logger.error("... can not create the WebSocket connection with error: "+e.getMessage());
             if (null != message)
                 RejectionMessageService.sendRejectionMessage(
                         RejectionMessageType.REJECTION_COMMUNICATION_LOCAL_ISSUES,
