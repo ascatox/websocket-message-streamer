@@ -15,7 +15,7 @@ public class FileRecreatorJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         try {
-            logger.info("Recreation operation started at: " + LocalDateTime.now());
+            logger.debug("Recreation operation started at: " + LocalDateTime.now());
             FileRecreatorBeanServer fileRecreatorBean = WebSocketServerManager.getFileRecreatorBeanWebSocket();
             fileRecreatorBean.setup();
             Thread fileRecreatorBeanThread = new Thread(fileRecreatorBean, "FileRecreator");
