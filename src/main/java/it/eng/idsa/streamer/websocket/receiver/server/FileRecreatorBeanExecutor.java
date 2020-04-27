@@ -23,6 +23,7 @@ public class FileRecreatorBeanExecutor {
     private String keystorePassword;
     private Integer recreationFrequency;
     private String path;
+    private String forwardTo;
 
     private FileRecreatorBeanExecutor() {
         trigger();
@@ -115,5 +116,13 @@ public class FileRecreatorBeanExecutor {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getForwardTo() {
+        return forwardTo;
+    }
+
+    public void setForwardTo(String forwardTo) {
+        this.forwardTo = forwardTo;
     }
 }
