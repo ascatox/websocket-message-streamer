@@ -45,7 +45,7 @@ public class HttpWebSocketMessagingLogic {
                 Thread responseMessageSendPartialServerThread = new Thread(responseMessageSendPartialServer, "ResponseMessageSendPartialServer");
                 responseMessageSendPartialServerThread.start();
             }
-           logger.info(HttpWebSocketMessagingLogic.class.getSimpleName() +" DATA RECEIVED FROM SOCKET -> " + receivedMessage);
+           //logger.info(HttpWebSocketMessagingLogic.class.getSimpleName() +" DATA RECEIVED FROM SOCKET -> " + receivedMessage);
 
        }
     }
