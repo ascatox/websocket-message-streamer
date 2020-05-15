@@ -29,7 +29,7 @@ public class MessageWebSocketResponse {
     }
 
     public void setMultipartMessage(String multipartMessage) {
-        logger.info("Message arrived to consumer with data: " + multipartMessage);
+        //logger.info("Message arrived to consumer with data: " + multipartMessage);
         support.firePropertyChange("multipartMessage", this.multipartMessage, multipartMessage);
         this.multipartMessage = multipartMessage;
     }
