@@ -1,9 +1,7 @@
 package it.eng.idsa.streamer.util;
 
-
-import de.fraunhofer.iais.eis.Message;
-import nl.tno.ids.common.multipart.MultiPart;
-import nl.tno.ids.common.multipart.MultiPartMessage;
+import it.eng.idsa.multipart.domain.MultipartMessage;
+import it.eng.idsa.multipart.processor.MultipartMessageProcessor;
 
 /**
  * 
@@ -13,24 +11,18 @@ import nl.tno.ids.common.multipart.MultiPartMessage;
 
 
 /**
- * Service Implementation for managing MultiPartMessage.
+ * MultiPartMessageServiceUtil.
  */
 public class MultiPartMessageServiceUtil {
 	
 	public static String getHeader(String body) {
-		MultiPartMessage deserializedMultipartMessage = MultiPart.parseString(body);
-		return deserializedMultipartMessage.getHeaderString();
+		MultipartMessage deserializedMultipartMessage = MultipartMessageProcessor.parseMultipartMessage(body);
+		return deserializedMultipartMessage.getHeaderContentString();
 	}
 
 	public static String getPayload(String body) {
-		MultiPartMessage deserializedMultipartMessage = MultiPart.parseString(body);
-		return deserializedMultipartMessage.getPayload();
+		MultipartMessage deserializedMultipartMessage = MultipartMessageProcessor.parseMultipartMessage(body);
+		return deserializedMultipartMessage.getPayloadContent();
 	}
-
-	public static Message getMessage(String body) {
-		MultiPartMessage deserializedMultipartMessage = MultiPart.parseString(body);
-		return deserializedMultipartMessage.getHeader();
-	}
-
 
 }

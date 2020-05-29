@@ -1,13 +1,15 @@
 package it.eng.idsa.streamer.websocket.sender;
 
 import de.fraunhofer.iais.eis.Message;
+import it.eng.idsa.multipart.builder.MultipartMessageBuilder;
+import it.eng.idsa.multipart.domain.MultipartMessage;
+import it.eng.idsa.multipart.processor.MultipartMessageProcessor;
 import it.eng.idsa.streamer.WebSocketClientManager;
 import it.eng.idsa.streamer.service.RejectionMessageService;
 import it.eng.idsa.streamer.util.MultiPartMessageServiceUtil;
 import it.eng.idsa.streamer.util.RejectionMessageType;
 import it.eng.idsa.streamer.websocket.sender.client.FileStreamingBean;
 import it.eng.idsa.streamer.websocket.receiver.server.HttpWebSocketServerBean;
-import nl.tno.ids.common.multipart.MultiPartMessage;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -83,15 +85,15 @@ public class MessageWebSocketSender {
 
     private String doSendMultipartMessageWebSocketOverHttps(String header, String payload, String forwardTo, Message message)
             throws Exception {
-        MultiPartMessage multipartMessage = new MultiPartMessage.Builder()
-                .setHeader(header)
-                .setPayload(payload)
+    	MultipartMessage multipartMessage = new MultipartMessageBuilder()
+                .withHeaderContent(header)
+                .withPayloadContent(payload)
                 .build();
         FileStreamingBean fileStreamingBean = WebSocketClientManager.getFileStreamingWebSocket();
         WebSocket wsClient = createWebSocketClient(message, getWebSocketUrl(forwardTo));
         // Try to connect to the Server. Wait until you are not connected to the server.
         fileStreamingBean.setup(wsClient);
-        fileStreamingBean.sendMultipartMessage(multipartMessage.toString());
+        fileStreamingBean.sendMultipartMessage(MultipartMessageProcessor.multipartMessagetoString(multipartMessage, false));
         //fileStreamingBean.sendMultipartMessage(multipartMessage);
         // We don't have status of the response (is it 200 OK or not). We have only the content of the response.
         String responseMessage = new String(WebSocketClientManager.getResponseMessageBufferWebSocketClient().remove());

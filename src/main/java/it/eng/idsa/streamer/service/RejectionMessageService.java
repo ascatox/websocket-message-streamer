@@ -5,11 +5,11 @@ import de.fraunhofer.iais.eis.Message;
 import de.fraunhofer.iais.eis.RejectionMessageBuilder;
 import de.fraunhofer.iais.eis.RejectionReason;
 import de.fraunhofer.iais.eis.ResultMessageBuilder;
+import it.eng.idsa.multipart.builder.MultipartMessageBuilder;
+import it.eng.idsa.multipart.domain.MultipartMessage;
+import it.eng.idsa.multipart.processor.MultipartMessageProcessor;
+import it.eng.idsa.multipart.util.DateUtil;
 import it.eng.idsa.streamer.util.RejectionMessageType;
-import nl.tno.ids.common.multipart.MultiPart;
-import nl.tno.ids.common.multipart.MultiPartMessage;
-import nl.tno.ids.common.multipart.MultiPartMessage.Builder;
-import nl.tno.ids.common.serialization.DateUtil;
 
 import java.net.URI;
 
@@ -29,10 +29,10 @@ public class RejectionMessageService {
 
 	public static void sendRejectionMessage(RejectionMessageType rejectionMessageType, Message message) throws Exception {
 		Message rejectionMessage = createRejectionMessage(rejectionMessageType.toString(), message);
-		Builder builder = new Builder();
-		builder.setHeader(rejectionMessage);
-		MultiPartMessage builtMessage = builder.build();
-		String stringMessage = MultiPart.toString(builtMessage, false);
+		MultipartMessage builtMessage = new MultipartMessageBuilder()
+    			.withHeaderContent(rejectionMessage)
+    			.build();
+		String stringMessage = MultipartMessageProcessor.multipartMessagetoString(builtMessage, false);
 		throw new Exception(stringMessage);
 	}
 	
