@@ -19,8 +19,6 @@ public class FileRecreatorBeanExecutor {
     private static final Logger logger = LogManager.getLogger(FileRecreatorBeanExecutor.class);
     private static FileRecreatorBeanExecutor instance;
     private static ResourceBundle configuration = ResourceBundle.getBundle("config");
-    private Scheduler scheduler = null;
-
     private Integer port;
     private String keystorePath;
     private String keystorePassword;
@@ -45,29 +43,27 @@ public class FileRecreatorBeanExecutor {
         return instance;
     }
 
-    public void trigger(Integer recreationFrequency){
-        doTriggerWithScheduler(recreationFrequency);
+    public void trigger(Integer recreationFrequency) {
+        Integer recreationFreq = recreationFrequency != null ? recreationFrequency :
+                Integer.parseInt(configuration.getString("application.recreation.frequency"));
+        doTriggerWithSchedulerService(recreationFreq);
     }
 
-    public void trigger(){
-        doTriggerWithScheduler(null);
+    public void trigger() {
+        doTriggerWithSchedulerService(Integer.parseInt(configuration.getString("application.recreation.frequency")));
     }
 
-    private void doTrigger(Integer recreationFreq) {
+    private void doTriggerWithQuartz(Integer recreationFrequency) {
         try {
-            Integer recreationFrequency = recreationFreq != null ? recreationFreq :
-                    Integer.parseInt(configuration.getString("application.recreation.frequency"));
             JobDetail job = JobBuilder.newJob(FileRecreatorJob.class).build();
-
             // Trigger the job to run on the next round minute
-            Trigger trigger = null;
-                trigger = TriggerBuilder
-                        .newTrigger()
-                        .withSchedule(
-                                SimpleScheduleBuilder.simpleSchedule()
-                                        .withIntervalInMilliseconds(recreationFrequency)
-                                        .repeatForever())
-                        .build();
+            Trigger trigger = TriggerBuilder
+                    .newTrigger()
+                    .withSchedule(
+                            SimpleScheduleBuilder.simpleSchedule()
+                                    .withIntervalInMilliseconds(recreationFrequency)
+                                    .repeatForever())
+                    .build();
             // schedule it
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
             scheduler.start();
@@ -76,24 +72,11 @@ public class FileRecreatorBeanExecutor {
             logger.error("Error during Quartz Scheduling of FileRecreatorJob with stack: " + e.getMessage());
         }
     }
-    private void doTriggerWithScheduler(Integer recreationFreq) {
-        Integer recreationFrequency = recreationFreq != null ? recreationFreq :
-                Integer.parseInt(configuration.getString("application.recreation.frequency"));
+
+    private void doTriggerWithSchedulerService(Integer recreationFrequency) {
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         FileRecreatorJob fileRecreatorJob = new FileRecreatorJob();
         executorService.scheduleAtFixedRate(fileRecreatorJob, 0, recreationFrequency, TimeUnit.MILLISECONDS);
-    }
-
-    public String getFileRecreatorResult() {
-        try {
-            for (JobExecutionContext jobContext : scheduler.getCurrentlyExecutingJobs()) {
-                return jobContext.getResult().toString();
-            }
-        } catch (SchedulerException e) {
-            logger.error("Error in Retrieving data from FileRecreator with stack: " + e.getMessage());
-        }
-
-        return null;
     }
 
     public Integer getPort() {
