@@ -8,7 +8,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
-import java.io.File;
 import java.net.BindException;
 import java.net.URL;
 import java.nio.file.Path;

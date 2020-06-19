@@ -13,7 +13,7 @@ public class MessageWebSocketResponse {
     private static final Logger logger = LogManager.getLogger(MessageWebSocketResponse.class);
     private static MessageWebSocketResponse instance;
     private PropertyChangeSupport support;
-    private String multipartMessage;
+    //private String multipartMessage;
 
 
     private MessageWebSocketResponse() {
@@ -29,9 +29,8 @@ public class MessageWebSocketResponse {
     }
 
     public void setMultipartMessage(String multipartMessage) {
-        //logger.info("Message arrived to consumer with data: " + multipartMessage);
-        support.firePropertyChange("multipartMessage", this.multipartMessage, multipartMessage);
-        this.multipartMessage = multipartMessage;
+        support.firePropertyChange("multipartMessage", null, multipartMessage);
+        //this.multipartMessage = multipartMessage;
     }
 
     public static MessageWebSocketResponse getInstance() {

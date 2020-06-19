@@ -91,11 +91,9 @@ public class FileRecreatorBeanServer implements Runnable {
         try {
             logger.info("Started process: Recreate the Multipart message from the received frames");
             multipartMessage = recreateMultipartMessage(this.fileByteArray);
-            logger.info("Recreated the Multipart message from the received frames: lenght=" + multipartMessage.length());
+            logger.info("Recreated the Multipart message from the received frames: length=" + multipartMessage.length());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            System.out.println("Error on the process of recreation the file from the received frames.");
+           logger.error("Error on the process of recreation the file from the received frames:" + e.getMessage());
         }
         return multipartMessage;
     }

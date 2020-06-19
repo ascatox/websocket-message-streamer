@@ -1,5 +1,8 @@
 package it.eng.idsa.streamer.websocket.receiver.server;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.concurrent.*;
 
 /**
@@ -9,13 +12,14 @@ import java.util.concurrent.*;
  */
 
 public class FrameBufferBean {
-	// Pattern Producer Consumer implemented using BlockinqQueue is a newer and simpler implementation!
-	private BlockingQueue<byte[]> frameQueue;
+	//private BlockingQueue<byte[]> frameQueue;
 
 	private static FrameBufferBean instance;
+	private static final Logger logger = LogManager.getLogger(FrameBufferBean.class);
+
 
 	private FrameBufferBean() {
-		this.frameQueue  = new ArrayBlockingQueue<>(1);
+		//this.frameQueue  = new ArrayBlockingQueue<>(1);
 	}
 
 	public static FrameBufferBean getInstance() {
@@ -29,11 +33,11 @@ public class FrameBufferBean {
 		return instance;
 	}
 
-	public void add(byte[] msg) {
+	/*public void add(byte[] msg) {
 		try {
 			frameQueue.put(msg);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			logger.error("FrameBufferBean error in add  with stack: "+ e.getMessage());
 		}
 	}
 
@@ -41,10 +45,45 @@ public class FrameBufferBean {
 		try {
 			return frameQueue.take();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} finally{
+			logger.error("FrameBufferBean error in remove with stack: "+ e.getMessage());
+			} finally{
 			frameQueue.clear();
 		}
 		return null;
+	}*/
+
+	private byte[] frame = null;
+	private boolean frameIsReceived = false;
+
+	public synchronized void add(byte[] msg) {
+		if(frameIsReceived) {
+			try {
+				wait();
+			} catch(InterruptedException e) {
+				logger.error("FrameBufferBean error in add method with stack: "+ e.getMessage());
+			}
+		}
+
+		this.frame = msg;
+		frameIsReceived = true;
+		notify();
+	}
+
+	public synchronized byte[] remove() {
+		if(!frameIsReceived) {
+			try {
+				wait();
+			} catch(InterruptedException e) {
+				logger.error("FrameBufferBean error in remove method with stack: "+ e.getMessage());
+			}
+		}
+
+		frameIsReceived = false;
+		try {
+			return frame;
+		}finally{
+			notify();
+			frame = null;
+		}
 	}
 }

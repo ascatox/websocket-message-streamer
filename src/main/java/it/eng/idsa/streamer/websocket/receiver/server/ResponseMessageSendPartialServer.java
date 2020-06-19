@@ -1,6 +1,8 @@
 package it.eng.idsa.streamer.websocket.receiver.server;
 
 import it.eng.idsa.streamer.WebSocketServerManager;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
 
@@ -16,7 +18,7 @@ import java.util.Arrays;
  */
 
 public class ResponseMessageSendPartialServer implements Runnable {
-	
+	private static final Logger logger = LogManager.getLogger(ResponseMessageSendPartialServer.class);
 	private Session session;
 	
 	private static final int DEFAULT_STREAM_BUFFER_SIZE = 127;
@@ -51,8 +53,7 @@ public class ResponseMessageSendPartialServer implements Runnable {
 		try {
 			sendResponseMessageAsPartialBytes(remote, responseMessage);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error encountered in run method with stack: " + e.getMessage());
 		}
 	}
 	

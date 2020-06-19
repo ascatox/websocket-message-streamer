@@ -26,28 +26,32 @@ public class HttpWebSocketMessagingLogic {
 
     public static HttpWebSocketMessagingLogic getInstance() {
         if (instance == null) {
-            instance = new HttpWebSocketMessagingLogic();
+            synchronized (HttpWebSocketMessagingLogic.class) {
+                if (instance == null) {
+                    instance = new HttpWebSocketMessagingLogic();
+                }
+            }
         }
         return instance;
     }
 
     public void onMessage(Session session, byte[] message) {
         String receivedMessage = new String(message, StandardCharsets.UTF_8);
-       if (receivedMessage.equals(CLOSURE_FRAME)) {
+        if (receivedMessage.equals(CLOSURE_FRAME)) {
             // The last frame is received - skip this frame
             // This indicate that Client WebSocket now is closed
         } else {
             // Put the received frame in the frameBuffer
-           WebSocketServerManager.getFrameBufferWebSocket().add(message.clone());
+            WebSocketServerManager.getFrameBufferWebSocket().add(message.clone());
             if (receivedMessage.equals(END_BINARY_FRAME_SEPARATOR)) {
                 ResponseMessageSendPartialServer responseMessageSendPartialServer = WebSocketServerManager.responseMessageSendPartialWebSocket();
                 responseMessageSendPartialServer.setup(session);
                 Thread responseMessageSendPartialServerThread = new Thread(responseMessageSendPartialServer, "ResponseMessageSendPartialServer");
                 responseMessageSendPartialServerThread.start();
             }
-           //logger.info(HttpWebSocketMessagingLogic.class.getSimpleName() +" DATA RECEIVED FROM SOCKET -> " + receivedMessage);
+            //logger.info(HttpWebSocketMessagingLogic.class.getSimpleName() +" DATA RECEIVED FROM SOCKET -> " + receivedMessage);
 
-       }
+        }
     }
 
 }

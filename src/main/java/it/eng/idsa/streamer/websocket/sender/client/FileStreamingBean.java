@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 
 public class FileStreamingBean {
 
-    private static final String START_BINARY_FRAME_SEPARATOR = "�normal-IDS-ENG-SEPARATOR the-first-rame";
+    private static final String START_BINARY_FRAME_SEPARATOR = "�normal-IDS-ENG-SEPARATOR the-first-frame";
 
     private static final String END_BINARY_FRAME_SEPARATOR = "�normal-IDS-ENG-SEPARATOR the-last-frame";
 
@@ -23,6 +23,7 @@ public class FileStreamingBean {
     private WebSocket wsClient = null;
     private String serverIP;
     private int serverPort;
+
 
     private static final int DEFAULT_STREAM_BUFFER_SIZE = 127;
     private int streamBufferSize = DEFAULT_STREAM_BUFFER_SIZE;
