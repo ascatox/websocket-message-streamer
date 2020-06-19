@@ -52,37 +52,4 @@ public class ResponseMessageBufferClient {
         }
         return null;
     }
-   /* private byte[] responseMessage = null;
-    private boolean responseMessageIsReceived = false;
-
-    public synchronized void add(byte[] msg) {
-        if(responseMessageIsReceived) {
-            try {
-                wait();
-            } catch(InterruptedException e) {
-                logger.error("ResponseMessageBufferClient error in add method with stack: "+ e.getMessage());
-            }
-        }
-
-        this.responseMessage = msg;
-        responseMessageIsReceived = true;
-        notify();
-    }
-
-    public synchronized byte[] remove() {
-        if(!responseMessageIsReceived) {
-            try {
-                wait();
-            } catch(InterruptedException e) {
-                logger.error("ResponseMessageBufferClient error in remove method with stack: "+ e.getMessage());
-            }
-        }
-        responseMessageIsReceived = false;
-        try {
-            return responseMessage;
-        }finally{
-            notify();
-            responseMessage = null;
-        }
-    }*/
 }

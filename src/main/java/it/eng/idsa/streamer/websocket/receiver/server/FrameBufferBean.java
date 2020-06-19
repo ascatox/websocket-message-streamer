@@ -50,38 +50,4 @@ public class FrameBufferBean {
         return null;
     }
 
-	/*private byte[] frame = null;
-	private boolean frameIsReceived = false;
-
-	public synchronized void add(byte[] msg) {
-		if(frameIsReceived) {
-			try {
-				wait();
-			} catch(InterruptedException e) {
-				logger.error("FrameBufferBean error in add method with stack: "+ e.getMessage());
-			}
-		}
-
-		this.frame = msg;
-		frameIsReceived = true;
-		notify();
-	}
-
-	public synchronized byte[] remove() {
-		if(!frameIsReceived) {
-			try {
-				wait();
-			} catch(InterruptedException e) {
-				logger.error("FrameBufferBean error in remove method with stack: "+ e.getMessage());
-			}
-		}
-
-		frameIsReceived = false;
-		try {
-			return frame;
-		}finally{
-			notify();
-			frame = null;
-		}
-	}*/
 }

@@ -50,38 +50,4 @@ public class RecreatedMultipartMessageBean {
         }
         return null;
     }
-    /*private String multipartMessage = null;
-    private boolean multipartMessageIsRecreated = false;
-
-    public synchronized void set(String multipartMessage) {
-        if(multipartMessageIsRecreated) {
-            try {
-                wait();
-            } catch(InterruptedException e) {
-                logger.error("RecreatedMultipartMessageBean error method in set with stack: "+ e.getMessage());
-            }
-        }
-
-        this.multipartMessage = multipartMessage;
-        multipartMessageIsRecreated = true;
-        notify();
-    }
-
-    public synchronized String remove() {
-        if(!multipartMessageIsRecreated) {
-            try {
-                wait();
-            } catch(InterruptedException e) {
-                logger.error("RecreatedMultipartMessageBean error method in remove with stack: "+ e.getMessage());
-            }
-        }
-
-        multipartMessageIsRecreated = false;
-        try {
-            return multipartMessage;
-        }finally{
-            notify();
-            multipartMessage = null;
-        }
-    }*/
 }
