@@ -21,12 +21,10 @@ public class FileRecreatorBeanExecutor {
     private Integer port;
     private String keystorePath;
     private String keystorePassword;
-    private Integer recreationFrequency;
     private String path;
     private String forwardTo;
 
     private FileRecreatorBeanExecutor() {
-        trigger();
     }
 
     public static FileRecreatorBeanExecutor getInstance() {
@@ -44,20 +42,29 @@ public class FileRecreatorBeanExecutor {
         return instance;
     }
 
-    private void trigger() {
+    public void trigger(Integer recreationFrequency){
+        doTrigger(recreationFrequency);
+    }
+
+    public void trigger(){
+        doTrigger(null);
+    }
+
+    private void doTrigger(Integer recreationFreq) {
         try {
-            Integer recreationFrequency = getRecreationFrequency() != null ? getRecreationFrequency() :
+            Integer recreationFrequency = recreationFreq != null ? recreationFreq :
                     Integer.parseInt(configuration.getString("application.recreation.frequency"));
             JobDetail job = JobBuilder.newJob(FileRecreatorJob.class).build();
 
             // Trigger the job to run on the next round minute
-            Trigger trigger = TriggerBuilder
-                    .newTrigger()
-                    .withSchedule(
-                            SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInMilliseconds(recreationFrequency)
-                                    .repeatForever())
-                                    .build();
+            Trigger trigger = null;
+                trigger = TriggerBuilder
+                        .newTrigger()
+                        .withSchedule(
+                                SimpleScheduleBuilder.simpleSchedule()
+                                        .withIntervalInMilliseconds(recreationFrequency)
+                                        .repeatForever())
+                        .build();
             // schedule it
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
             scheduler.start();
@@ -101,14 +108,6 @@ public class FileRecreatorBeanExecutor {
 
     public void setKeystorePassword(String keystorePassword) {
         this.keystorePassword = keystorePassword;
-    }
-
-    public Integer getRecreationFrequency() {
-        return recreationFrequency;
-    }
-
-    public void setRecreationFrequency(Integer recreationFrequency) {
-        this.recreationFrequency = recreationFrequency;
     }
 
     public String getPath() {
