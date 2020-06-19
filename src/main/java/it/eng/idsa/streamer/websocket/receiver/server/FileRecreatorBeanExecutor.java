@@ -56,7 +56,8 @@ public class FileRecreatorBeanExecutor {
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
                                     .withIntervalInMilliseconds(recreationFrequency)
-                                    .repeatForever()).build();
+                                    .repeatForever())
+                                    .build();
             // schedule it
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
             scheduler.start();

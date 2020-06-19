@@ -11,13 +11,13 @@ import java.util.concurrent.BlockingQueue;
  */
 
 public class RecreatedMultipartMessageBean {
-   // private BlockingQueue<String> multipartMessageQueue;
+    private BlockingQueue<String> multipartMessageQueue;
     private static RecreatedMultipartMessageBean instance;
     private static final Logger logger = LogManager.getLogger(RecreatedMultipartMessageBean.class);
 
 
     private RecreatedMultipartMessageBean() {
-        //this.multipartMessageQueue = new ArrayBlockingQueue<>(1);
+        this.multipartMessageQueue = new ArrayBlockingQueue<>(1);
     }
 
     public static RecreatedMultipartMessageBean getInstance() {
@@ -32,11 +32,11 @@ public class RecreatedMultipartMessageBean {
     }
 
 
-    /*public void set(String multipartMessage) {
+    public void set(String multipartMessage) {
         try {
             multipartMessageQueue.put(multipartMessage);
         } catch (InterruptedException e) {
-             logger.error("RecreatedMultipartMessageBean error in set  with stack: "+ e.getMessage());
+             logger.error("RecreatedMultipartMessageBean error in set method  with stack: "+ e.getMessage());
         }
     }
 
@@ -44,13 +44,13 @@ public class RecreatedMultipartMessageBean {
         try {
             return multipartMessageQueue.take();
         } catch (InterruptedException e) {
-              logger.error("RecreatedMultipartMessageBean error in remove  with stack: "+ e.getMessage());
+              logger.error("RecreatedMultipartMessageBean error in remove method  with stack: "+ e.getMessage());
         } finally {
-            multipartMessageQueue.clear();
+            //multipartMessageQueue.clear();
         }
         return null;
-    }*/
-    private String multipartMessage = null;
+    }
+    /*private String multipartMessage = null;
     private boolean multipartMessageIsRecreated = false;
 
     public synchronized void set(String multipartMessage) {
@@ -58,7 +58,7 @@ public class RecreatedMultipartMessageBean {
             try {
                 wait();
             } catch(InterruptedException e) {
-                logger.error("RecreatedMultipartMessageBean error method in set  with stack: "+ e.getMessage());
+                logger.error("RecreatedMultipartMessageBean error method in set with stack: "+ e.getMessage());
             }
         }
 
@@ -72,7 +72,7 @@ public class RecreatedMultipartMessageBean {
             try {
                 wait();
             } catch(InterruptedException e) {
-                logger.error("RecreatedMultipartMessageBean error method in remove  with stack: "+ e.getMessage());
+                logger.error("RecreatedMultipartMessageBean error method in remove with stack: "+ e.getMessage());
             }
         }
 
@@ -83,5 +83,5 @@ public class RecreatedMultipartMessageBean {
             notify();
             multipartMessage = null;
         }
-    }
+    }*/
 }
