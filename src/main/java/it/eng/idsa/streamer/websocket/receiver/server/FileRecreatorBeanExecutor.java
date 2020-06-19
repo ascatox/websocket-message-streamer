@@ -7,6 +7,9 @@ import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Antonio Scatoloni
@@ -43,11 +46,11 @@ public class FileRecreatorBeanExecutor {
     }
 
     public void trigger(Integer recreationFrequency){
-        doTrigger(recreationFrequency);
+        doTriggerWithScheduler(recreationFrequency);
     }
 
     public void trigger(){
-        doTrigger(null);
+        doTriggerWithScheduler(null);
     }
 
     private void doTrigger(Integer recreationFreq) {
@@ -72,6 +75,13 @@ public class FileRecreatorBeanExecutor {
         } catch (SchedulerException e) {
             logger.error("Error during Quartz Scheduling of FileRecreatorJob with stack: " + e.getMessage());
         }
+    }
+    private void doTriggerWithScheduler(Integer recreationFreq) {
+        Integer recreationFrequency = recreationFreq != null ? recreationFreq :
+                Integer.parseInt(configuration.getString("application.recreation.frequency"));
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        FileRecreatorJob fileRecreatorJob = new FileRecreatorJob();
+        executorService.scheduleAtFixedRate(fileRecreatorJob, 0, recreationFrequency, TimeUnit.MILLISECONDS);
     }
 
     public String getFileRecreatorResult() {
